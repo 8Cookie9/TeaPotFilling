@@ -1,28 +1,22 @@
 package com.teapotfilling;
 
-import com.datahandling.*;
-import com.timer.Timer;
+import com.datahandling.Command;
+import com.datahandling.Data;
+import com.datahandling.GetData;
+import com.datahandling.SetData;
+import com.gui.GUI;
+import com.poro.User;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.SwingUtilities;
 
 public class App 
 {
     public static void main( String[] args )
     {
-        GetData get=new GetData("file.txt");
-        SetData set=new SetData("file.txt");
-        Timer timer=new Timer(3000);
-        set.clean();
-        List<String> list;
-        for(int i=0;i<5;i++){
-            list=new ArrayList<>();
-            list.add(i+"");
-            set.write(list);
-            timer.startWait();
-        }
-        
-        for(String s:get.data()){
-            System.out.println(s);
-        }
+        Data data=new Data();
+        Command command=new Command("C:/Users/Jaakko/AppData/Roaming/AnkhHeart/AnkhBotR2/Twitch/Files/commands.txt", data);
+        GUI gui=new GUI(command);
+        SwingUtilities.invokeLater(gui);
     }
 }

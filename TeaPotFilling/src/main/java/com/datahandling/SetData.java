@@ -13,10 +13,10 @@ public class SetData {
     
     public void write(List<String> lines){
         try{
+            FileWriter writer = new FileWriter(this.filename);
             GetData get=new GetData(filename);
             List<String> content=get.data();
             content.addAll(lines);
-            FileWriter writer = new FileWriter(this.filename);
             for(String line:content){
                 writer.append(line+"\n");
             }
