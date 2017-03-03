@@ -5,6 +5,9 @@ public class Level {
     private int hp;
     private int defense;
     private int attack;
+    private int hpIV;
+    private int defenseIV;
+    private int attackIV;
     private int hpModifier;
     private int defenseModifier;
     private int attackModifier;
@@ -12,13 +15,16 @@ public class Level {
     private int levelGain;
     private int totalExp;
     
-    public Level(int hp, int def, int atk, int hpmod, int defmod, int atkmod, int levelgain){
+    public Level(int hpIV, int defIV, int atkIV, int hpmod, int defmod, int atkmod, int levelgain){
         this.exp=0;
         this.totalExp=0;
         this.level=1;
-        this.hp=hp;
-        this.defense=def;
-        this.attack=atk;
+        this.hpIV=hpIV;
+        this.defenseIV=defIV;
+        this.attackIV=atkIV;
+        this.hp=hpIV;
+        this.defense=defIV;
+        this.attack=atkIV;
         this.hpModifier=hpmod;
         this.defenseModifier=defmod;
         this.attackModifier=atkmod;
@@ -80,6 +86,16 @@ public class Level {
     public int getLevelGain() {
         return levelGain;
     }
-    
-    
+
+    public int getHpIV() {
+        return hpIV;
+    }
+
+    public int getDefenseIV() {
+        return defenseIV;
+    }
+
+    public int getAttackIV() {
+        return attackIV;
+    }
 }

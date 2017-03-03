@@ -1,24 +1,28 @@
 package com.datahandling;
 
 import com.poro.Poro;
+import com.poro.PoroFactory;
 import com.poro.User;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Command {
     private String file;
     private Data data;
     private List<String> commands;
+    private PoroFactory poroFactory;
     
-    public Command(String file, Data data){
-        this.file=file;
+    public Command(Data data){
         this.data=data;
+        this.file=data.getFilepath();
         this.commands=new ArrayList<>();
+        this.poroFactory=new PoroFactory(this.file+"poro.txt");
     }
     
     public void getCommands(){
-        GetData getData=new GetData(this.file);
-        SetData setData=new SetData(this.file);
+        GetData getData=new GetData(this.file+"commands.txt");
+        SetData setData=new SetData(this.file+"commands.txt");
         this.commands=getData.data();
         setData.clean();
     }
@@ -34,7 +38,7 @@ public class Command {
         if(com.length<2){
             return;
         }
-        String username=com[0];
+        String username=normalise(com[0]);
         String commandName=com[1];
         String[] args=null;
         if(com.length-2>0){
@@ -45,11 +49,25 @@ public class Command {
         }
         if(getUserData(username)==null){
             User user=new User(username);
-            user.newPoro(new Poro("Poro",0,0,0,1,1,1,1));
             this.data.getData().add(user);
+            SetData set=new SetData(this.data.getFilepath()+"/"+username+".txt");
+            set.clean();
+            this.commands=new ArrayList<>();
+            return;
         }
         if(commandName.equals("addexp")){
             getUserData(username).getPoro().addExp(Integer.parseInt(args[0]));
+        }else if(commandName.equals("newporo")){
+            getUserData(username).newPoro(this.poroFactory.getPoro(0));
+        }else if(commandName.equals("randomtea")){
+            String tea="";
+            for(int i=0;i<args.length;i++){
+                tea+=args[i];
+                if(i!=args.length-1){
+                    tea+=" ";
+                }
+            }
+            getUserData(username).getPoro().addExp(expFromTea(tea));
         }
         this.data.setData(this.data.getData());
         this.data.saveData();
@@ -63,5 +81,35 @@ public class Command {
             }
         }
         return null;
+    }
+    
+    private String normalise(String s){
+        String characters="abcdefghijklmnopqrstuvwxyz0123456789_";
+        String res="";
+        for(int i=0;i<s.length();i++){
+            if(characters.contains(s.toLowerCase().charAt(i)+"")){
+                res+=s.charAt(i);
+            }
+        }
+        return res;
+    }
+    
+    public int expFromTea(String t){
+        String[] tea=t.split(" ");
+        int exp;
+        if(tea[0].equals("low-quality")){
+            exp=1;
+        }else if(tea[0].equals("standard")){
+            exp=5;
+        }else if(tea[0].equals("high-quality")){
+            exp=10;
+        }else if(tea[0].equals("top-quality")){
+            exp=100;
+        }else if(tea[0].equals("perfect")){
+            exp=1000;
+        }else{
+            exp=1;
+        }
+        return exp*(new Random().nextInt(50)+1);
     }
 }

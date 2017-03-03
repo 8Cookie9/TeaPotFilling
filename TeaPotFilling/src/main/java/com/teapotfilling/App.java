@@ -14,8 +14,8 @@ public class App
 {
     public static void main( String[] args )
     {
-        Data data=new Data();
-        Command command=new Command("C:/Users/Jaakko/AppData/Roaming/AnkhHeart/AnkhBotR2/Twitch/Files/commands.txt", data);
+        Data data=new Data("C:/Users/Jaakko/AppData/Roaming/AnkhHeart/AnkhBotR2/Twitch/Files");
+        Command command=new Command(data);
         GUI gui=new GUI(command);
         SwingUtilities.invokeLater(gui);
     }

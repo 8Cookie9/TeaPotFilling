@@ -44,6 +44,8 @@ public class GUI implements Runnable{
         JButton start=new JButton("Start");
         JButton stop=new JButton("Stop");
         start.addActionListener((ActionEvent e) ->{
+            this.timer=new Timer();
+            this.update=new Update(this.command);
             this.timer.scheduleAtFixedRate(update, 1000, 3000);
             start.setEnabled(false);
             stop.setEnabled(true);

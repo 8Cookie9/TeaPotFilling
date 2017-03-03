@@ -35,7 +35,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.teaptfilling.App</mainClass>
+                                    <mainClass>com.teapotfilling.App</mainClass>
                                     <!-- mainClass on muotoa "fi.omanimi.superprojekti.Main" -->
                                 </transformer>
                             </transformers>
@@ -57,6 +57,5 @@
                 <version>2.5</version>
             </plugin>
         </plugins>
-    </build>
-    
+    </build> 
 </project>

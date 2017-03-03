@@ -7,11 +7,12 @@ import java.util.List;
 import java.util.Random;
 
 public class PoroFactory {
-    private String filepath;
+    private final String filepath;
     private HashMap<Integer, List<String[]>> poroes;
     
     public PoroFactory(String filepath){
         this.filepath=filepath;
+        this.poroes=new HashMap<>();
         this.getPoroes();
     }
     
@@ -30,13 +31,13 @@ public class PoroFactory {
     public int randomRarity(int luck){
         Random random=new Random();
         int r=random.nextInt(10000);
-        if(r<=0+luck){
+        if(r<=10+luck){
             return 5;
-        }else if(r<=10+luck){
-            return 4;
         }else if(r<=100+luck){
-            return 3;
+            return 4;
         }else if(r<=1000+luck){
+            return 3;
+        }else if(r<=5000+luck){
             return 2;
         }else{
             return 1;
@@ -47,8 +48,11 @@ public class PoroFactory {
         int rarity=this.randomRarity(luck);
         Random random=new Random();
         List<String[]> porolist=this.poroes.get(rarity);
+        if(porolist.isEmpty()){
+            return new Poro("Regular Poro",new Random().nextInt(11),new Random().nextInt(11),new Random().nextInt(11),1,1,1,1);
+        }
         String[] poroInfo=porolist.get(random.nextInt(porolist.size()));
-        Poro poro=new Poro(poroInfo[0],0,0,0,Integer.parseInt(poroInfo[3]),Integer.parseInt(poroInfo[4]),Integer.parseInt(poroInfo[5]),Integer.parseInt(poroInfo[2]));
+        Poro poro=new Poro(poroInfo[0],new Random().nextInt(11),new Random().nextInt(11),new Random().nextInt(11),Integer.parseInt(poroInfo[3]),Integer.parseInt(poroInfo[4]),Integer.parseInt(poroInfo[5]),Integer.parseInt(poroInfo[2]));
         return poro;
     }
 }

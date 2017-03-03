@@ -1,4 +1,11 @@
+com\poro\Poro.class
+com\poro\User.class
+com\datahandling\Data.class
+com\poro\PoroFactory.class
 com\datahandling\SetData.class
-com\timer\Timer.class
+com\datahandling\Command.class
+com\gui\GUI.class
+com\poro\Level.class
+com\gui\GUI$Update.class
 com\teapotfilling\App.class
 com\datahandling\GetData.class
