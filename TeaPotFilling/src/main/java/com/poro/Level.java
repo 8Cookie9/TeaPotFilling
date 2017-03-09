@@ -5,14 +5,14 @@ public class Level {
     private int hp;
     private int defense;
     private int attack;
-    private int hpIV;
-    private int defenseIV;
-    private int attackIV;
-    private int hpModifier;
-    private int defenseModifier;
-    private int attackModifier;
+    private final int hpIV;
+    private final int defenseIV;
+    private final int attackIV;
+    private final int hpModifier;
+    private final int defenseModifier;
+    private final int attackModifier;
     private int level;
-    private int levelGain;
+    private final int levelGain;
     private int totalExp;
     
     public Level(int hpIV, int defIV, int atkIV, int hpmod, int defmod, int atkmod, int levelgain){
@@ -32,7 +32,7 @@ public class Level {
     }
     
     public int expForNextLevel(){
-        return (int) (this.levelGain*Math.pow(2,this.level));
+        return (int) Math.round(this.levelGain*10*Math.sqrt(this.level));
     }
     
     public int getTotalExp(){

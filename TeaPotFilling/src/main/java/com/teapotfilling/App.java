@@ -20,24 +20,24 @@ import javax.swing.SwingUtilities;
 
 public class App {
     public static void main( String[] args ) throws Exception {
-//        Data data=new Data("C:/Users/Jaakko/AppData/Roaming/AnkhHeart/AnkhBotR2/Twitch/Files");
-//        Command command=new Command(data);
-//        GUI gui=new GUI(command);
-//        SwingUtilities.invokeLater(gui);
+        Data data=new Data("C:/Users/Pumpkin/Documents/Streamstuff/Poro");
+        Command command=new Command(data);
+        GUI gui=new GUI(command);
+        SwingUtilities.invokeLater(gui);
         
-        if (System.getenv("PORT") != null) {
-            port(Integer.valueOf(System.getenv("PORT")));
-        }
-
-        String jdbcOsoite = "jdbc:sqlite:kanta1.db";
-        if (System.getenv("DATABASE_URL") != null) {
-            jdbcOsoite = System.getenv("DATABASE_URL");
-        }
-        Database database = new Database(jdbcOsoite);
-        
-        Spark.get("/", (req, res) -> {
-            res.redirect("/");
-            return "ok";
-        });
+//        if (System.getenv("PORT") != null) {
+//            port(Integer.valueOf(System.getenv("PORT")));
+//        }
+//
+//        String jdbcOsoite = "jdbc:sqlite:kanta1.db";
+//        if (System.getenv("DATABASE_URL") != null) {
+//            jdbcOsoite = System.getenv("DATABASE_URL");
+//        }
+//        Database database = new Database(jdbcOsoite);
+//        
+//        Spark.get("/", (req, res) -> {
+//            res.redirect("/");
+//            return "ok";
+//        });
     }
 }

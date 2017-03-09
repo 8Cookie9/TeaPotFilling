@@ -46,8 +46,25 @@ public class Data {
                     int levelgain=Integer.parseInt(coms.get(7));
                     int totalExp=Integer.parseInt(coms.get(8));
                     Poro poro=new Poro(type, hpIV, atkIV, defIV, hpmod, defmod, atkmod, levelgain);
+                    Poro poro2=null;
+                    if(coms.size()>10){
+                        String type2=coms.get(9);
+                        int hpIV2=Integer.parseInt(coms.get(10));
+                        int atkIV2=Integer.parseInt(coms.get(11));
+                        int defIV2=Integer.parseInt(coms.get(12));
+                        int hpmod2=Integer.parseInt(coms.get(13));
+                        int defmod2=Integer.parseInt(coms.get(14));
+                        int atkmod2=Integer.parseInt(coms.get(15));
+                        int levelgain2=Integer.parseInt(coms.get(16));
+                        int totalExp2=Integer.parseInt(coms.get(17));
+                        poro2=new Poro(type2, hpIV2, atkIV2, defIV2, hpmod2, defmod2, atkmod2, levelgain2);
+                        poro2.gainExp(totalExp2);
+                    }
                     poro.gainExp(totalExp);
                     user.newPoro(poro);
+                    if(poro2!=null){
+                        user.newPoro(poro2);
+                    }
                     this.data.add(user);
                 }
             }
@@ -73,6 +90,20 @@ public class Data {
             userData.add("("+user.getPoro().getExp()+"/"+user.getPoro().expForNextLevel()+")");
             userData.add(user.getPoro().getLevel()+"");
             userData.add("("+user.getPoro().getHP()+", "+user.getPoro().getAttack()+", "+user.getPoro().getDefense()+")");
+            if(user.hasSecondary()){
+                userData.add(user.getSecondaryPoro().getType());
+                userData.add(user.getSecondaryPoro().getHpIV()+"");
+                userData.add(user.getSecondaryPoro().getAttackIV()+"");
+                userData.add(user.getSecondaryPoro().getDefenseIV()+"");
+                userData.add(user.getSecondaryPoro().getHpModifier()+"");
+                userData.add(user.getSecondaryPoro().getDefenseModifier()+"");
+                userData.add(user.getSecondaryPoro().getAttackModifier()+"");
+                userData.add(user.getSecondaryPoro().getLevelGain()+"");
+                userData.add(user.getSecondaryPoro().getTotalExp()+"");
+                userData.add("("+user.getSecondaryPoro().getExp()+"/"+user.getSecondaryPoro().expForNextLevel()+")");
+                userData.add(user.getSecondaryPoro().getLevel()+"");
+                userData.add("("+user.getSecondaryPoro().getHP()+", "+user.getSecondaryPoro().getAttack()+", "+user.getSecondaryPoro().getDefense()+")");
+            }
             setData.write(userData);
         }
     }

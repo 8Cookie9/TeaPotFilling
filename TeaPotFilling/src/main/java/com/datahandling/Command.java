@@ -17,12 +17,12 @@ public class Command {
         this.data=data;
         this.file=data.getFilepath();
         this.commands=new ArrayList<>();
-        this.poroFactory=new PoroFactory(this.file+"poro.txt");
+        this.poroFactory=new PoroFactory(this.file+"/poro.txt");
     }
     
     public void getCommands(){
-        GetData getData=new GetData(this.file+"commands.txt");
-        SetData setData=new SetData(this.file+"commands.txt");
+        GetData getData=new GetData(this.file+"/commands.txt");
+        SetData setData=new SetData(this.file+"/commands.txt");
         this.commands=getData.data();
         setData.clean();
     }
@@ -47,19 +47,20 @@ public class Command {
                 args[i-2]=com[i];
             }
         }
-        if(getUserData(username)==null){
+        if(getUserData(username)==null&&commandName.equals("firstporo")){
             User user=new User(username);
+            user.newPoro(this.poroFactory.getPoro(50));
             this.data.getData().add(user);
-            SetData set=new SetData(this.data.getFilepath()+"/"+username+".txt");
+            SetData set=new SetData(this.data.getFilepath()+"/Users/"+username+".txt");
             set.clean();
             this.commands=new ArrayList<>();
-            return;
-        }
-        if(commandName.equals("addexp")){
+        }else if(getUserData(username)!=null&&commandName.equals("addexp")){
             getUserData(username).getPoro().addExp(Integer.parseInt(args[0]));
-        }else if(commandName.equals("newporo")){
+        }else if(getUserData(username)!=null&&commandName.equals("newporo")){
             getUserData(username).newPoro(this.poroFactory.getPoro(0));
-        }else if(commandName.equals("randomtea")){
+        }else if(getUserData(username)!=null&&commandName.equals("swap")){
+            getUserData(username).swapPoros();
+        }else if(getUserData(username)!=null&&commandName.equals("randomtea")){
             String tea="";
             for(int i=0;i<args.length;i++){
                 tea+=args[i];
