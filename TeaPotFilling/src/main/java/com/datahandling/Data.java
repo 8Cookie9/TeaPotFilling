@@ -48,15 +48,15 @@ public class Data {
                     Poro poro=new Poro(type, hpIV, atkIV, defIV, hpmod, defmod, atkmod, levelgain);
                     Poro poro2=null;
                     if(coms.size()>10){
-                        String type2=coms.get(9);
-                        int hpIV2=Integer.parseInt(coms.get(10));
-                        int atkIV2=Integer.parseInt(coms.get(11));
-                        int defIV2=Integer.parseInt(coms.get(12));
-                        int hpmod2=Integer.parseInt(coms.get(13));
-                        int defmod2=Integer.parseInt(coms.get(14));
-                        int atkmod2=Integer.parseInt(coms.get(15));
-                        int levelgain2=Integer.parseInt(coms.get(16));
-                        int totalExp2=Integer.parseInt(coms.get(17));
+                        String type2=coms.get(12);
+                        int hpIV2=Integer.parseInt(coms.get(13));
+                        int atkIV2=Integer.parseInt(coms.get(14));
+                        int defIV2=Integer.parseInt(coms.get(15));
+                        int hpmod2=Integer.parseInt(coms.get(16));
+                        int defmod2=Integer.parseInt(coms.get(17));
+                        int atkmod2=Integer.parseInt(coms.get(18));
+                        int levelgain2=Integer.parseInt(coms.get(19));
+                        int totalExp2=Integer.parseInt(coms.get(20));
                         poro2=new Poro(type2, hpIV2, atkIV2, defIV2, hpmod2, defmod2, atkmod2, levelgain2);
                         poro2.gainExp(totalExp2);
                     }

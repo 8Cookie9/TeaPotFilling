@@ -1,6 +1,5 @@
 package com.datahandling;
 
-import com.poro.Poro;
 import com.poro.PoroFactory;
 import com.poro.User;
 import java.util.ArrayList;
@@ -47,20 +46,21 @@ public class Command {
                 args[i-2]=com[i];
             }
         }
-        if(getUserData(username)==null&&commandName.equals("firstporo")){
+        User userdata=getUserData(username);
+        if(userdata==null&&commandName.equals("firstporo")){
             User user=new User(username);
             user.newPoro(this.poroFactory.getPoro(50));
             this.data.getData().add(user);
             SetData set=new SetData(this.data.getFilepath()+"/Users/"+username+".txt");
             set.clean();
             this.commands=new ArrayList<>();
-        }else if(getUserData(username)!=null&&commandName.equals("addexp")){
-            getUserData(username).getPoro().addExp(Integer.parseInt(args[0]));
-        }else if(getUserData(username)!=null&&commandName.equals("newporo")){
-            getUserData(username).newPoro(this.poroFactory.getPoro(0));
-        }else if(getUserData(username)!=null&&commandName.equals("swap")){
-            getUserData(username).swapPoros();
-        }else if(getUserData(username)!=null&&commandName.equals("randomtea")){
+        }else if(userdata!=null&&commandName.equals("addexp")){
+            userdata.getPoro().addExp(Integer.parseInt(args[0]));
+        }else if(userdata!=null&&commandName.equals("newporo")){
+            userdata.newPoro(this.poroFactory.getPoro(0));
+        }else if(userdata!=null&&commandName.equals("swap")){
+            userdata.swapPoros();
+        }else if(userdata!=null&&commandName.equals("randomtea")){
             String tea="";
             for(int i=0;i<args.length;i++){
                 tea+=args[i];
@@ -68,9 +68,8 @@ public class Command {
                     tea+=" ";
                 }
             }
-            getUserData(username).getPoro().addExp(expFromTea(tea));
+            userdata.getPoro().addExp(expFromTea(tea));
         }
-        this.data.setData(this.data.getData());
         this.data.saveData();
         this.commands=new ArrayList<>();
     }
@@ -85,7 +84,7 @@ public class Command {
     }
     
     private String normalise(String s){
-        String characters="abcdefghijklmnopqrstuvwxyz0123456789_";
+        String characters="abcdefghijklmnopqrstuvwxyz0123456789_ ";
         String res="";
         for(int i=0;i<s.length();i++){
             if(characters.contains(s.toLowerCase().charAt(i)+"")){

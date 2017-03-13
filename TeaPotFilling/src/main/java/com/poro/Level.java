@@ -55,6 +55,10 @@ public class Level {
         return this.level;
     }
     
+    public void setLevel(int lv){
+        this.level=lv;
+    }
+    
     public int getHP(){
         return this.hp;
     }
