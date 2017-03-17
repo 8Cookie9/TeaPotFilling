@@ -55,4 +55,9 @@ public class Equipment {
     public int getAtk(){
         return this.atk;
     }
+    
+    @Override
+    public String toString(){
+        return this.quality+" "+this.name;
+    }
 }

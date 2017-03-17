@@ -1,11 +1,9 @@
+com\poro\Equipment.class
 com\poro\User.class
-com\database\Dao.class
 com\datahandling\SetData.class
-com\database\PoroDao.class
-com\database\UserDao.class
+com\poro\EquipmentFactory.class
 com\poro\Level.class
 com\poro\Poro.class
-com\database\Database.class
 com\datahandling\Data.class
 com\poro\PoroFactory.class
 com\datahandling\Command.class

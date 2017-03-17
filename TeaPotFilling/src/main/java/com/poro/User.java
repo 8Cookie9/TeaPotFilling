@@ -4,9 +4,18 @@ public class User {
     private String username;
     private Poro poro;
     private Poro secondaryPoro;
+    private Weapon weapon;
     
     public User(String username){
         this.username=username;
+    }
+    
+    public void setWeapon(Weapon w){
+        this.weapon=w;
+    }
+    
+    public Weapon getWeapon(){
+        return this.weapon;
     }
     
     public String getUsername(){

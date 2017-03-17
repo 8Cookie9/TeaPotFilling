@@ -2,6 +2,7 @@ package com.datahandling;
 
 import com.poro.PoroFactory;
 import com.poro.User;
+import com.poro.Weapon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -69,6 +70,34 @@ public class Command {
                 }
             }
             userdata.getPoro().addExp(expFromTea(tea));
+        }else if(userdata!=null&&commandName.equals("getweapon")){
+            int r=new Random().nextInt(6);
+            if(r==0){
+                userdata.setWeapon(new Weapon("pan", this.file, 0));
+            }else if(r==1){
+                userdata.setWeapon(new Weapon("hammer", this.file, 0));
+            }else if(r==2){
+                userdata.setWeapon(new Weapon("fishingrod", this.file, 0));
+            }else if(r==3){
+                userdata.setWeapon(new Weapon("pillow", this.file, 0));
+            }else if(r==4){
+                userdata.setWeapon(new Weapon("net", this.file, 0));
+            }else if(r==5){
+                userdata.setWeapon(new Weapon("lollipop", this.file, 0));
+            }
+        }else if(userdata!=null&&commandName.equals("headgear")){
+            
+        }else if(userdata!=null&&commandName.equals("misc")){
+            
+        }else if(userdata!=null&&commandName.equals("pastry")){
+            String pastry="";
+            for(int i=0;i<args.length;i++){
+                pastry+=args[i];
+                if(i!=args.length-1){
+                    pastry+=" ";
+                }
+            }
+            userdata.getPoro().addExp(expFromTea(pastry));
         }
         this.data.saveData();
         this.commands=new ArrayList<>();
