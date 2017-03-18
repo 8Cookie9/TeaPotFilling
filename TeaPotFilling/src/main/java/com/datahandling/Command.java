@@ -1,8 +1,9 @@
 package com.datahandling;
 
+import com.poro.Poro;
 import com.poro.PoroFactory;
 import com.poro.User;
-import com.poro.Weapon;
+import com.poro.Equipment;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -31,6 +32,7 @@ public class Command {
         for(String command:this.commands){
             runCommand(command);
         }
+        this.commands=new ArrayList<>();
     }
     
     public void runCommand(String command){
@@ -50,15 +52,38 @@ public class Command {
         User userdata=getUserData(username);
         if(userdata==null&&commandName.equals("firstporo")){
             User user=new User(username);
-            user.newPoro(this.poroFactory.getPoro(50));
+            String poro="";
+            for(int i=2;i<com.length;i++){
+                poro+=com[i];
+            }
+            String[] p=poro.split(";");
+            user.newPoro(new Poro(command.split(":")[1],Integer.parseInt(p[1]),Integer.parseInt(p[2]),Integer.parseInt(p[3]),Integer.parseInt(p[4]),Integer.parseInt(p[5]),Integer.parseInt(p[6]),Integer.parseInt(p[7])));
+            int r=new Random().nextInt(6);
+            if(r==0){
+                user.setEquipment(new Equipment(this.file+"/pan.txt", 0));
+            }else if(r==1){
+                user.setEquipment(new Equipment(this.file+"/hammer.txt", 0));
+            }else if(r==2){
+                user.setEquipment(new Equipment(this.file+"/fishingrod.txt", 0));
+            }else if(r==3){
+                user.setEquipment(new Equipment(this.file+"/pillow.txt", 0));
+            }else if(r==4){
+                user.setEquipment(new Equipment(this.file+"/net.txt", 0));
+            }else if(r==5){
+                user.setEquipment(new Equipment(this.file+"/lollipop.txt", 0));
+            }
             this.data.getData().add(user);
             SetData set=new SetData(this.data.getFilepath()+"/Users/"+username+".txt");
             set.clean();
-            this.commands=new ArrayList<>();
         }else if(userdata!=null&&commandName.equals("addexp")){
             userdata.getPoro().addExp(Integer.parseInt(args[0]));
         }else if(userdata!=null&&commandName.equals("newporo")){
-            userdata.newPoro(this.poroFactory.getPoro(0));
+            String poro="";
+            for(int i=2;i<com.length;i++){
+                poro+=com[i];
+            }
+            String[] p=poro.split(";");
+            userdata.newPoro(new Poro(command.split(":")[1],Integer.parseInt(p[1]),Integer.parseInt(p[2]),Integer.parseInt(p[3]),Integer.parseInt(p[4]),Integer.parseInt(p[5]),Integer.parseInt(p[6]),Integer.parseInt(p[7])));
         }else if(userdata!=null&&commandName.equals("swap")){
             userdata.swapPoros();
         }else if(userdata!=null&&commandName.equals("randomtea")){
@@ -70,25 +95,25 @@ public class Command {
                 }
             }
             userdata.getPoro().addExp(expFromTea(tea));
-        }else if(userdata!=null&&commandName.equals("getweapon")){
+        }else if(userdata!=null&&commandName.equals("newequipment")){
             int r=new Random().nextInt(6);
             if(r==0){
-                userdata.setWeapon(new Weapon("pan", this.file, 0));
+                userdata.setEquipment(new Equipment(this.file+"/pan.txt", 0));
             }else if(r==1){
-                userdata.setWeapon(new Weapon("hammer", this.file, 0));
+                userdata.setEquipment(new Equipment(this.file+"/hammer.txt", 0));
             }else if(r==2){
-                userdata.setWeapon(new Weapon("fishingrod", this.file, 0));
+                userdata.setEquipment(new Equipment(this.file+"/fishingrod.txt", 0));
             }else if(r==3){
-                userdata.setWeapon(new Weapon("pillow", this.file, 0));
+                userdata.setEquipment(new Equipment(this.file+"/pillow.txt", 0));
             }else if(r==4){
-                userdata.setWeapon(new Weapon("net", this.file, 0));
+                userdata.setEquipment(new Equipment(this.file+"/net.txt", 0));
             }else if(r==5){
-                userdata.setWeapon(new Weapon("lollipop", this.file, 0));
+                userdata.setEquipment(new Equipment(this.file+"/lollipop.txt", 0));
             }
         }else if(userdata!=null&&commandName.equals("headgear")){
-            
+            userdata.addHeadgear(new Random().nextInt(5)+1);
         }else if(userdata!=null&&commandName.equals("misc")){
-            
+            userdata.addMisc(new Random().nextInt(5)+1);
         }else if(userdata!=null&&commandName.equals("pastry")){
             String pastry="";
             for(int i=0;i<args.length;i++){
@@ -98,9 +123,24 @@ public class Command {
                 }
             }
             userdata.getPoro().addExp(expFromTea(pastry));
+        }else if(userdata!=null&&commandName.equals("battle")){
+            User targetdata = getUserData(args[0]);
+            if(args[1].equals("win")){
+                userdata.getEquipment().levelUp(5);
+            }else if(args[1].equals("lose")){
+                targetdata.getEquipment().levelUp(3);
+            }else if(args[1].equals("tie")){
+                userdata.getEquipment().levelUp(2);
+            }
+            if(args[2].equals("true")&&targetdata.getMiscHp()!=0){
+                int steal=new Random().nextInt(Math.min(targetdata.getMiscHp(),5));
+                userdata.addMisc(steal);
+                targetdata.addMisc(steal*(-1));
+            }
+        }else if(userdata!=null&&commandName.equals("practice")){
+            userdata.getEquipment().levelUp(3);
         }
         this.data.saveData();
-        this.commands=new ArrayList<>();
     }
     
     public User getUserData(String username){

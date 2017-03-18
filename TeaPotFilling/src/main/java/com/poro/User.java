@@ -4,18 +4,46 @@ public class User {
     private String username;
     private Poro poro;
     private Poro secondaryPoro;
-    private Weapon weapon;
+    private Equipment equipment;
+    private int headgearDef;
+    private int miscHp;
     
     public User(String username){
         this.username=username;
+        this.headgearDef=0;
+        this.miscHp=0;
     }
     
-    public void setWeapon(Weapon w){
-        this.weapon=w;
+    public void addMisc(int hp){
+        this.miscHp+=hp;
+        this.poro.addMisc(hp);
+        if(this.hasSecondary()){
+            this.secondaryPoro.addMisc(hp);
+        }
     }
     
-    public Weapon getWeapon(){
-        return this.weapon;
+    public void addHeadgear(int def){
+        this.headgearDef+=def;
+        this.poro.addHeadgear(def);
+        if(this.hasSecondary()){
+            this.secondaryPoro.addHeadgear(def);
+        }
+    }
+    
+    public int getHeadgearDef(){
+        return this.headgearDef;
+    }
+    
+    public int getMiscHp(){
+        return this.miscHp;
+    }
+    
+    public void setEquipment(Equipment w){
+        this.equipment=w;
+    }
+    
+    public Equipment getEquipment(){
+        return this.equipment;
     }
     
     public String getUsername(){

@@ -5,9 +5,9 @@ public class Level {
     private int hp;
     private int defense;
     private int attack;
-    private final int hpIV;
-    private final int defenseIV;
-    private final int attackIV;
+    private int hpIV;
+    private int defenseIV;
+    private int attackIV;
     private final int hpModifier;
     private final int defenseModifier;
     private final int attackModifier;
@@ -101,5 +101,17 @@ public class Level {
 
     public int getAttackIV() {
         return attackIV;
+    }
+    
+    public void addHpIV(int iv){
+        this.hpIV+=iv;
+    }
+    
+    public void addAtkIV(int iv){
+        this.attackIV+=iv;
+    }
+    
+    public void addDefIV(int iv){
+        this.defenseIV+=iv;
     }
 }

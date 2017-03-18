@@ -16,5 +16,11 @@ public class Poro extends Level{
         super.addExp(exp);
     }
     
+    public void addMisc(int hp){
+        super.addHpIV(hp);
+    }
     
+    public void addHeadgear(int def){
+        super.addDefIV(def);
+    }
 }

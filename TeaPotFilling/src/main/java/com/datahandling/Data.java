@@ -1,5 +1,6 @@
 package com.datahandling;
 
+import com.poro.Equipment;
 import com.poro.Poro;
 import com.poro.User;
 import java.io.File;
@@ -36,27 +37,30 @@ public class Data {
                     User user=new User(f.getName().split(".txt")[0]);
                     GetData reader=new GetData(f.getAbsolutePath());
                     List<String> coms=reader.data();
-                    String type=coms.get(0);
-                    int hpIV=Integer.parseInt(coms.get(1));
-                    int atkIV=Integer.parseInt(coms.get(2));
-                    int defIV=Integer.parseInt(coms.get(3));
-                    int hpmod=Integer.parseInt(coms.get(4));
-                    int defmod=Integer.parseInt(coms.get(5));
-                    int atkmod=Integer.parseInt(coms.get(6));
-                    int levelgain=Integer.parseInt(coms.get(7));
-                    int totalExp=Integer.parseInt(coms.get(8));
+                    user.addHeadgear(Integer.parseInt(coms.get(3)));
+                    user.addMisc(Integer.parseInt(coms.get(4)));
+                    user.setEquipment(new Equipment(coms.get(2),Integer.parseInt(coms.get(1))));
+                    String type=coms.get(5);
+                    int hpIV=Integer.parseInt(coms.get(6));
+                    int atkIV=Integer.parseInt(coms.get(7));
+                    int defIV=Integer.parseInt(coms.get(8));
+                    int hpmod=Integer.parseInt(coms.get(9));
+                    int defmod=Integer.parseInt(coms.get(10));
+                    int atkmod=Integer.parseInt(coms.get(11));
+                    int levelgain=Integer.parseInt(coms.get(12));
+                    int totalExp=Integer.parseInt(coms.get(13));
                     Poro poro=new Poro(type, hpIV, atkIV, defIV, hpmod, defmod, atkmod, levelgain);
                     Poro poro2=null;
                     if(coms.size()>10){
-                        String type2=coms.get(12);
-                        int hpIV2=Integer.parseInt(coms.get(13));
-                        int atkIV2=Integer.parseInt(coms.get(14));
-                        int defIV2=Integer.parseInt(coms.get(15));
-                        int hpmod2=Integer.parseInt(coms.get(16));
-                        int defmod2=Integer.parseInt(coms.get(17));
-                        int atkmod2=Integer.parseInt(coms.get(18));
-                        int levelgain2=Integer.parseInt(coms.get(19));
-                        int totalExp2=Integer.parseInt(coms.get(20));
+                        String type2=coms.get(17);
+                        int hpIV2=Integer.parseInt(coms.get(18));
+                        int atkIV2=Integer.parseInt(coms.get(19));
+                        int defIV2=Integer.parseInt(coms.get(20));
+                        int hpmod2=Integer.parseInt(coms.get(21));
+                        int defmod2=Integer.parseInt(coms.get(22));
+                        int atkmod2=Integer.parseInt(coms.get(23));
+                        int levelgain2=Integer.parseInt(coms.get(24));
+                        int totalExp2=Integer.parseInt(coms.get(25));
                         poro2=new Poro(type2, hpIV2, atkIV2, defIV2, hpmod2, defmod2, atkmod2, levelgain2);
                         poro2.gainExp(totalExp2);
                     }
@@ -78,6 +82,12 @@ public class Data {
             SetData setData=new SetData(this.filepath+"/Users/"+user.getUsername()+".txt");
             setData.clean();
             List<String> userData=new ArrayList<>();
+            userData.add(user.getEquipment().toString());
+            userData.add(""+user.getEquipment().getLevel());
+            userData.add(""+user.getEquipment().getExp());
+            userData.add(user.getEquipment().getFilepath());
+            userData.add(""+user.getHeadgearDef());
+            userData.add(""+user.getMiscHp());
             userData.add(user.getPoro().getType());
             userData.add(user.getPoro().getHpIV()+"");
             userData.add(user.getPoro().getAttackIV()+"");
