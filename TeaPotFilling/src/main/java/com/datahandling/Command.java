@@ -50,6 +50,7 @@ public class Command {
             }
         }
         User userdata=getUserData(username);
+        
         if(userdata==null&&commandName.equals("firstporo")){
             User user=new User(username);
             String poro="";
@@ -97,19 +98,21 @@ public class Command {
             userdata.getPoro().addExp(expFromTea(tea));
         }else if(userdata!=null&&commandName.equals("newequipment")){
             int r=new Random().nextInt(6);
+            Equipment e=new Equipment(this.file+"/pan.txt", 0);
             if(r==0){
-                userdata.setEquipment(new Equipment(this.file+"/pan.txt", 0));
+                e=new Equipment(this.file+"/pan.txt", 0);
             }else if(r==1){
-                userdata.setEquipment(new Equipment(this.file+"/hammer.txt", 0));
+                e=new Equipment(this.file+"/hammer.txt", 0);
             }else if(r==2){
-                userdata.setEquipment(new Equipment(this.file+"/fishingrod.txt", 0));
+                e=new Equipment(this.file+"/fishingrod.txt", 0);
             }else if(r==3){
-                userdata.setEquipment(new Equipment(this.file+"/pillow.txt", 0));
+                e=new Equipment(this.file+"/pillow.txt", 0);
             }else if(r==4){
-                userdata.setEquipment(new Equipment(this.file+"/net.txt", 0));
+                e=new Equipment(this.file+"/net.txt", 0);
             }else if(r==5){
-                userdata.setEquipment(new Equipment(this.file+"/lollipop.txt", 0));
+                e=new Equipment(this.file+"/lollipop.txt", 0);
             }
+            userdata.setEquipment(e);
         }else if(userdata!=null&&commandName.equals("headgear")){
             userdata.addHeadgear(new Random().nextInt(5)+1);
         }else if(userdata!=null&&commandName.equals("misc")){
@@ -129,7 +132,7 @@ public class Command {
                 userdata.getEquipment().levelUp(5);
             }else if(args[1].equals("lose")){
                 targetdata.getEquipment().levelUp(3);
-            }else if(args[1].equals("tie")){
+            }else{
                 userdata.getEquipment().levelUp(2);
             }
             if(args[2].equals("true")&&targetdata.getMiscHp()!=0){
