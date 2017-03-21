@@ -3,8 +3,8 @@ package com.poro;
 public class Poro extends Level{
     private final String type;
     
-    public Poro(String type, int hp, int atk, int def, int hpmod, int defmod, int atkmod, int levelgain){
-        super(hp,def,atk,hpmod,defmod,atkmod,levelgain);
+    public Poro(String type, int hp, int atk, int def, int hpmod, int atkmod, int defmod, int levelgain){
+        super(hp,def,atk,hpmod,atkmod,defmod,levelgain);
         this.type=type;
     }
     

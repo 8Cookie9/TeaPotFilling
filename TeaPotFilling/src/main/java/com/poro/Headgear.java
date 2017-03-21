@@ -1,25 +1,24 @@
 package com.poro;
 
-public class Misc {
+public class Headgear {
     private final String name;
-    private final int hp;
+    private final int def;
     
-    public Misc(String name, int hp){
+    public Headgear(String name, int def){
         this.name=name;
-        this.hp=hp;
+        this.def=def;
     }
     
     public String getName(){
         return this.name;
     }
     
-    public int getHp(){
-        return this.hp;
+    public int getDef(){
+        return this.def;
     }
     
     @Override
     public String toString(){
-        return this.name +"("+this.hp+")";
+        return this.name +"("+this.def+")";
     }
 }
-

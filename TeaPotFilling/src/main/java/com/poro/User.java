@@ -1,41 +1,44 @@
 package com.poro;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private String username;
     private Poro poro;
     private Poro secondaryPoro;
     private Equipment equipment;
-    private int headgearDef;
-    private int miscHp;
+    private List<Headgear> headgear;
+    private List<Misc> misc;
     
     public User(String username){
         this.username=username;
-        this.headgearDef=0;
-        this.miscHp=0;
+        this.headgear=new ArrayList<>();
+        this.misc=new ArrayList<>();
     }
     
-    public void addMisc(int hp){
-        this.miscHp+=hp;
-        this.poro.addMisc(hp);
+    public void addMisc(Misc m){
+        this.misc.add(m);
+        this.poro.addMisc(m.getHp());
         if(this.hasSecondary()){
-            this.secondaryPoro.addMisc(hp);
+            this.secondaryPoro.addMisc(m.getHp());
         }
     }
     
-    public void addHeadgear(int def){
-        this.headgearDef+=def;
-        this.poro.addHeadgear(def);
+    public void addHeadgear(Headgear h){
+        this.headgear.add(h);
+        this.poro.addMisc(h.getDef());
         if(this.hasSecondary()){
-            this.secondaryPoro.addHeadgear(def);
+            this.secondaryPoro.addMisc(h.getDef());
         }
     }
     
-    public int getHeadgearDef(){
-        return this.headgearDef;
+    public List<Misc> getMisc(){
+        return this.misc;
     }
     
-    public int getMiscHp(){
-        return this.miscHp;
+    public List<Headgear> getHeadgear(){
+        return this.headgear;
     }
     
     public void setEquipment(Equipment w){

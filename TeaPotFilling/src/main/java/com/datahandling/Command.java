@@ -4,6 +4,9 @@ import com.poro.Poro;
 import com.poro.PoroFactory;
 import com.poro.User;
 import com.poro.Equipment;
+import com.poro.Headgear;
+import com.poro.Misc;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -49,8 +52,8 @@ public class Command {
                 args[i-2]=com[i];
             }
         }
+        System.out.println(username);
         User userdata=getUserData(username);
-        
         if(userdata==null&&commandName.equals("firstporo")){
             User user=new User(username);
             String poro="";
@@ -59,22 +62,32 @@ public class Command {
             }
             String[] p=poro.split(";");
             user.newPoro(new Poro(command.split(":")[1],Integer.parseInt(p[1]),Integer.parseInt(p[2]),Integer.parseInt(p[3]),Integer.parseInt(p[4]),Integer.parseInt(p[5]),Integer.parseInt(p[6]),Integer.parseInt(p[7])));
-            int r=new Random().nextInt(6);
+            int r=new Random().nextInt(19);
             if(r==0){
-                user.setEquipment(new Equipment(this.file+"/pan.txt", 0));
-            }else if(r==1){
-                user.setEquipment(new Equipment(this.file+"/hammer.txt", 0));
-            }else if(r==2){
-                user.setEquipment(new Equipment(this.file+"/fishingrod.txt", 0));
-            }else if(r==3){
-                user.setEquipment(new Equipment(this.file+"/pillow.txt", 0));
-            }else if(r==4){
-                user.setEquipment(new Equipment(this.file+"/net.txt", 0));
-            }else if(r==5){
+                user.setEquipment(new Equipment(this.file+"/giantteaspoon.txt", 0));
+            }else if(r==1||r==2){
                 user.setEquipment(new Equipment(this.file+"/lollipop.txt", 0));
+            }else if(r==3||r==4){
+                user.setEquipment(new Equipment(this.file+"/candycane.txt", 0));
+            }else if(r<=7){
+                user.setEquipment(new Equipment(this.file+"/fryingpan.txt", 0));
+            }else if(r<=10){
+                user.setEquipment(new Equipment(this.file+"/pillow.txt", 0));
+            }else if(r<=14){
+                user.setEquipment(new Equipment(this.file+"/net.txt", 0));
+            }else if(r<=18){
+                user.setEquipment(new Equipment(this.file+"/fishingrod.txt", 0));
             }
             this.data.getData().add(user);
-            SetData set=new SetData(this.data.getFilepath()+"/Users/"+username+".txt");
+            File dir=new File(this.data.getFilepath()+"/Users/"+username);
+            dir.mkdir();
+            SetData set=new SetData(this.data.getFilepath()+"/Users/"+username+"/equipment.txt");
+            set.clean();
+            set=new SetData(this.data.getFilepath()+"/Users/"+username+"/poros.txt");
+            set.clean();
+            set=new SetData(this.data.getFilepath()+"/Users/"+username+"/headgear.txt");
+            set.clean();
+            set=new SetData(this.data.getFilepath()+"/Users/"+username+"/misc.txt");
             set.clean();
         }else if(userdata!=null&&commandName.equals("addexp")){
             userdata.getPoro().addExp(Integer.parseInt(args[0]));
@@ -97,26 +110,34 @@ public class Command {
             }
             userdata.getPoro().addExp(expFromTea(tea));
         }else if(userdata!=null&&commandName.equals("newequipment")){
-            int r=new Random().nextInt(6);
-            Equipment e=new Equipment(this.file+"/pan.txt", 0);
+            int r=new Random().nextInt(19);
             if(r==0){
-                e=new Equipment(this.file+"/pan.txt", 0);
-            }else if(r==1){
-                e=new Equipment(this.file+"/hammer.txt", 0);
-            }else if(r==2){
-                e=new Equipment(this.file+"/fishingrod.txt", 0);
-            }else if(r==3){
-                e=new Equipment(this.file+"/pillow.txt", 0);
-            }else if(r==4){
-                e=new Equipment(this.file+"/net.txt", 0);
-            }else if(r==5){
-                e=new Equipment(this.file+"/lollipop.txt", 0);
+                userdata.setEquipment(new Equipment(this.file+"/giantteaspoon.txt", 0));
+            }else if(r==1||r==2){
+                userdata.setEquipment(new Equipment(this.file+"/lollipop.txt", 0));
+            }else if(r==3||r==4){
+                userdata.setEquipment(new Equipment(this.file+"/candycane.txt", 0));
+            }else if(r<=7){
+                userdata.setEquipment(new Equipment(this.file+"/fryingpan.txt", 0));
+            }else if(r<=10){
+                userdata.setEquipment(new Equipment(this.file+"/pillow.txt", 0));
+            }else if(r<=14){
+                userdata.setEquipment(new Equipment(this.file+"/net.txt", 0));
+            }else if(r<=18){
+                userdata.setEquipment(new Equipment(this.file+"/fishingrod.txt", 0));
             }
-            userdata.setEquipment(e);
         }else if(userdata!=null&&commandName.equals("headgear")){
-            userdata.addHeadgear(new Random().nextInt(5)+1);
+            String name="";
+            for(int i=0;i<(args.length-1);i++){
+                name+=args[i];
+            }
+            userdata.addHeadgear(new Headgear(name, Integer.parseInt(args[args.length-1])));
         }else if(userdata!=null&&commandName.equals("misc")){
-            userdata.addMisc(new Random().nextInt(5)+1);
+            String name="";
+            for(int i=0;i<(args.length-1);i++){
+                name+=args[i];
+            }
+            userdata.addMisc(new Misc(name, Integer.parseInt(args[args.length-1])));
         }else if(userdata!=null&&commandName.equals("pastry")){
             String pastry="";
             for(int i=0;i<args.length;i++){
@@ -135,10 +156,10 @@ public class Command {
             }else{
                 userdata.getEquipment().levelUp(2);
             }
-            if(args[2].equals("true")&&targetdata.getMiscHp()!=0){
-                int steal=new Random().nextInt(Math.min(targetdata.getMiscHp(),5));
-                userdata.addMisc(steal);
-                targetdata.addMisc(steal*(-1));
+            if(args[2].equals("true")&&!targetdata.getMisc().isEmpty()){
+                int steal=new Random().nextInt(targetdata.getMisc().size());
+                userdata.addMisc(targetdata.getMisc().get(steal));
+                targetdata.getMisc().remove(steal);
             }
         }else if(userdata!=null&&commandName.equals("practice")){
             userdata.getEquipment().levelUp(3);
