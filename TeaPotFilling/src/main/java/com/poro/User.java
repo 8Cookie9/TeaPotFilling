@@ -27,9 +27,9 @@ public class User {
     
     public void addHeadgear(Headgear h){
         this.headgear.add(h);
-        this.poro.addMisc(h.getDef());
+        this.poro.addHeadgear(h.getDef());
         if(this.hasSecondary()){
-            this.secondaryPoro.addMisc(h.getDef());
+            this.secondaryPoro.addHeadgear(h.getDef());
         }
     }
     

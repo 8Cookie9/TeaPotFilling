@@ -34,19 +34,19 @@ public class Data {
         for(File f:new File(this.filepath+"/Users").listFiles()){
             if(f.isDirectory()){
                 User user=new User(f.getName());
+                GetData get=new GetData(f.getAbsolutePath().replace("\\", "/")+"/poros.txt");
+                List<String> filedata=get.data();
+                Poro p=new Poro(filedata.get(0),Integer.parseInt(filedata.get(1)),Integer.parseInt(filedata.get(2)),Integer.parseInt(filedata.get(3)),Integer.parseInt(filedata.get(4)),Integer.parseInt(filedata.get(5)),Integer.parseInt(filedata.get(6)),Integer.parseInt(filedata.get(7)));
+                p.gainExp(Integer.parseInt(filedata.get(8)));
+                user.newPoro(p);
+                if(filedata.size()>15){
+                    Poro p2=new Poro(filedata.get(11),Integer.parseInt(filedata.get(12)),Integer.parseInt(filedata.get(13)),Integer.parseInt(filedata.get(14)),Integer.parseInt(filedata.get(15)),Integer.parseInt(filedata.get(16)),Integer.parseInt(filedata.get(17)),Integer.parseInt(filedata.get(18)));
+                    p2.gainExp(Integer.parseInt(filedata.get(19)));
+                    user.newPoro(p2);
+                }
                 for(File file:f.listFiles()){
-                    GetData get=new GetData(file.getAbsolutePath().replace("\\", "/"));
-                    if(file.getName().contains("poros")){
-                        List<String> filedata=get.data();
-                        Poro p=new Poro(filedata.get(0),Integer.parseInt(filedata.get(1)),Integer.parseInt(filedata.get(2)),Integer.parseInt(filedata.get(3)),Integer.parseInt(filedata.get(4)),Integer.parseInt(filedata.get(5)),Integer.parseInt(filedata.get(6)),Integer.parseInt(filedata.get(7)));
-                        p.gainExp(Integer.parseInt(filedata.get(8)));
-                        user.newPoro(p);
-                        if(filedata.size()>15){
-                            Poro p2=new Poro(filedata.get(11),Integer.parseInt(filedata.get(12)),Integer.parseInt(filedata.get(13)),Integer.parseInt(filedata.get(14)),Integer.parseInt(filedata.get(15)),Integer.parseInt(filedata.get(16)),Integer.parseInt(filedata.get(17)),Integer.parseInt(filedata.get(18)));
-                            p2.gainExp(Integer.parseInt(filedata.get(19)));
-                            user.newPoro(p2);
-                        }
-                    }else if(file.getName().contains("misc")){
+                    get=new GetData(file.getAbsolutePath().replace("\\", "/"));
+                    if(file.getName().contains("misc")){
                         for(String s:get.data()){
                             user.addMisc(new Misc(s.split(";")[0],Integer.parseInt(s.split(";")[1])));
                         }
@@ -55,7 +55,7 @@ public class Data {
                             user.addHeadgear(new Headgear(s.split(";")[0],Integer.parseInt(s.split(";")[1])));
                         }
                     }else if(file.getName().contains("equipment")){
-                        List<String> filedata=get.data();
+                        filedata=get.data();
                         user.setEquipment(new Equipment(filedata.get(0),Integer.parseInt(filedata.get(1))));
                     }
                 }
@@ -90,7 +90,7 @@ public class Data {
                 userData.add(user.getSecondaryPoro().getDefenseModifier()+"");
                 userData.add(user.getSecondaryPoro().getLevelGain()+"");
                 userData.add(user.getSecondaryPoro().getTotalExp()+"");
-                userData.add("level "+user.getSecondaryPoro().getLevel()+" ("+user.getSecondaryPoro().getExp()+"/"+user.getSecondaryPoro().expForNextLevel()+")");
+                userData.add("level "+user.getSecondaryPoro().getLevel()+" of friendship ("+user.getSecondaryPoro().getExp()+"/"+user.getSecondaryPoro().expForNextLevel()+")");
                 userData.add("("+user.getSecondaryPoro().getHP()+", "+user.getSecondaryPoro().getAttack()+", "+user.getSecondaryPoro().getDefense()+")");
             }
             setData.write(userData);
@@ -100,6 +100,7 @@ public class Data {
             userData=new ArrayList<>();
             userData.add(user.getEquipment().getFilepath());
             userData.add(""+user.getEquipment().getTotalExp());
+            userData.add(""+user.getEquipment().getLevel());
             userData.add(user.getEquipment().toString());
             setData.write(userData);
             

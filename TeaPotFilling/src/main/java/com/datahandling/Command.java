@@ -52,7 +52,6 @@ public class Command {
                 args[i-2]=com[i];
             }
         }
-        System.out.println(username);
         User userdata=getUserData(username);
         if(userdata==null&&commandName.equals("firstporo")){
             User user=new User(username);
@@ -130,12 +129,18 @@ public class Command {
             String name="";
             for(int i=0;i<(args.length-1);i++){
                 name+=args[i];
+                if(i!=args.length-2){
+                    name+=" ";
+                }
             }
             userdata.addHeadgear(new Headgear(name, Integer.parseInt(args[args.length-1])));
         }else if(userdata!=null&&commandName.equals("misc")){
             String name="";
             for(int i=0;i<(args.length-1);i++){
                 name+=args[i];
+                if(i!=args.length-2){
+                    name+=" ";
+                }
             }
             userdata.addMisc(new Misc(name, Integer.parseInt(args[args.length-1])));
         }else if(userdata!=null&&commandName.equals("pastry")){
@@ -150,11 +155,11 @@ public class Command {
         }else if(userdata!=null&&commandName.equals("battle")){
             User targetdata = getUserData(args[0]);
             if(args[1].equals("win")){
-                userdata.getEquipment().levelUp(5);
+                userdata.getEquipment().addExp(5);
             }else if(args[1].equals("lose")){
-                targetdata.getEquipment().levelUp(3);
+                targetdata.getEquipment().addExp(3);
             }else{
-                userdata.getEquipment().levelUp(2);
+                userdata.getEquipment().addExp(2);
             }
             if(args[2].equals("true")&&!targetdata.getMisc().isEmpty()){
                 int steal=new Random().nextInt(targetdata.getMisc().size());
@@ -162,7 +167,7 @@ public class Command {
                 targetdata.getMisc().remove(steal);
             }
         }else if(userdata!=null&&commandName.equals("practice")){
-            userdata.getEquipment().levelUp(3);
+            userdata.getEquipment().addExp(3);
         }
         this.data.saveData();
     }

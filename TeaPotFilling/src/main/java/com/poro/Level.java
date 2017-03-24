@@ -103,15 +103,15 @@ public class Level {
         return attackIV;
     }
     
-    public void addHpIV(int iv){
-        this.hpIV+=iv;
+    public void addHp(int iv){
+        this.hp+=iv;
     }
     
-    public void addAtkIV(int iv){
-        this.attackIV+=iv;
+    public void addAtk(int iv){
+        this.attack+=iv;
     }
     
-    public void addDefIV(int iv){
-        this.defenseIV+=iv;
+    public void addDef(int iv){
+        this.defense+=iv;
     }
 }

@@ -12,8 +12,8 @@ public class Equipment{
         this.filepath=filepath;
         this.level=1;
         this.exp=0;
-        this.totalExp=exp;
-        this.levelUp(exp);
+        this.totalExp=0;
+        this.addExp(exp);
     }
     
     public int getLevel(){
@@ -33,7 +33,7 @@ public class Equipment{
     }
     
     public String exp(){
-        String xpToNext="0";
+        String xpToNext;
         if(level==1){
             xpToNext="10";
         }else if(level==2){
@@ -61,7 +61,7 @@ public class Equipment{
     }
     
     public int levelUp(int experience){
-        int xp=this.exp+experience;
+        int xp=experience;
         if(level==1&&xp>=10){
             this.level++;
             return levelUp(xp-10);
@@ -93,9 +93,13 @@ public class Equipment{
             this.level++;
             return levelUp(xp-300);
         }else{
-            this.exp=xp;
             return xp;
         }
+    }
+    
+    public void addExp(int exp){
+        this.totalExp+=exp;
+        this.exp=this.levelUp(exp+this.exp);
     }
     
     @Override
