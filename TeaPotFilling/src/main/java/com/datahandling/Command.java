@@ -122,7 +122,7 @@ public class Command {
                 userdata.setEquipment(new Equipment(this.file+"/pillow.txt", 0));
             }else if(r<=14){
                 userdata.setEquipment(new Equipment(this.file+"/net.txt", 0));
-            }else if(r<=18){
+            }else{
                 userdata.setEquipment(new Equipment(this.file+"/fishingrod.txt", 0));
             }
         }else if(userdata!=null&&commandName.equals("headgear")){
