@@ -44,6 +44,13 @@ public class Data {
                     p2.gainExp(Integer.parseInt(filedata.get(19)));
                     user.newPoro(p2);
                 }
+                get=new GetData(f.getAbsolutePath().replace("\\", "/")+"/storage.txt");
+                filedata=get.data();
+                for(int i=0;i<filedata.size()/9;i++){
+                    p=new Poro(filedata.get(9*i+0),Integer.parseInt(filedata.get(9*i+1)),Integer.parseInt(filedata.get(9*i+2)),Integer.parseInt(filedata.get(9*i+3)),Integer.parseInt(filedata.get(9*i+4)),Integer.parseInt(filedata.get(9*i+5)),Integer.parseInt(filedata.get(9*i+6)),Integer.parseInt(filedata.get(9*i+7)));
+                    p.gainExp(Integer.parseInt(filedata.get(9*i+8)));
+                    user.newPoro(p);
+                }
                 for(File file:f.listFiles()){
                     get=new GetData(file.getAbsolutePath().replace("\\", "/"));
                     if(file.getName().contains("misc")){
@@ -117,6 +124,45 @@ public class Data {
             userData=new ArrayList<>();
             for(Misc m:user.getMisc()){
                 userData.add(m.getName()+";"+m.getHp());
+            }
+            setData.write(userData);
+            
+            setData=new SetData(this.filepath+"/Users/"+user.getUsername()+"/storage.txt");
+            setData.clean();
+            userData=new ArrayList<>();
+            for(Poro p:user.getStorage()){
+                userData.add(p.getType());
+                userData.add(p.getHpIV()+"");
+                userData.add(p.getAttackIV()+"");
+                userData.add(p.getDefenseIV()+"");
+                userData.add(p.getHpModifier()+"");
+                userData.add(p.getAttackModifier()+"");
+                userData.add(p.getDefenseModifier()+"");
+                userData.add(p.getLevelGain()+"");
+                userData.add(p.getTotalExp()+"");
+            }
+            setData.write(userData);
+            
+            setData=new SetData(this.filepath+"/Users/"+user.getUsername()+"/storagetext.txt");
+            setData.clean();
+            userData=new ArrayList<>();
+            String s="";
+            int b=0;
+            for(Poro p:user.getStorage()){
+                if((b+1)%5==1){
+                    s+="Page ["+(int) Math.ceil((b+5)/5)+"/"+(int) Math.ceil((user.getStorage().size()+4)/5)+"] ";
+                }
+                s+="["+b+"] "+p.getType()+" (Lv "+p.getLevel()+")";
+                if(b==user.getStorage().size()){
+                    userData.add(s);
+                    s="";
+                }else if((b+1)%5!=0&&b!=user.getStorage().size()-1){
+                    s+=", ";
+                }else{
+                    userData.add(s);
+                    s="";
+                }
+                b++;
             }
             setData.write(userData);
         }

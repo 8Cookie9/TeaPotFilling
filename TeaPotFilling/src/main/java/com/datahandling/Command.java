@@ -88,6 +88,10 @@ public class Command {
             set.clean();
             set=new SetData(this.data.getFilepath()+"/Users/"+username+"/misc.txt");
             set.clean();
+            set=new SetData(this.data.getFilepath()+"/Users/"+username+"/storage.txt");
+            set.clean();
+            set=new SetData(this.data.getFilepath()+"/Users/"+username+"/storagetext.txt");
+            set.clean();
         }else if(userdata!=null&&commandName.equals("addexp")){
             userdata.getPoro().addExp(Integer.parseInt(args[0]));
         }else if(userdata!=null&&commandName.equals("newporo")){
@@ -99,6 +103,8 @@ public class Command {
             userdata.newPoro(new Poro(command.split(":")[1],Integer.parseInt(p[1]),Integer.parseInt(p[2]),Integer.parseInt(p[3]),Integer.parseInt(p[4]),Integer.parseInt(p[5]),Integer.parseInt(p[6]),Integer.parseInt(p[7])));
         }else if(userdata!=null&&commandName.equals("swap")){
             userdata.swapPoros();
+        }else if(userdata!=null&&commandName.equals("getporo")){
+            userdata.getPoro(Integer.parseInt(args[0]));
         }else if(userdata!=null&&commandName.equals("randomtea")){
             String tea="";
             for(int i=0;i<args.length;i++){
@@ -143,15 +149,6 @@ public class Command {
                 }
             }
             userdata.addMisc(new Misc(name, Integer.parseInt(args[args.length-1])));
-        }else if(userdata!=null&&commandName.equals("pastry")){
-            String pastry="";
-            for(int i=0;i<args.length;i++){
-                pastry+=args[i];
-                if(i!=args.length-1){
-                    pastry+=" ";
-                }
-            }
-            userdata.getPoro().addExp(expFromTea(pastry));
         }else if(userdata!=null&&commandName.equals("battle")){
             User targetdata = getUserData(args[0]);
             if(args[1].equals("win")){
@@ -209,5 +206,13 @@ public class Command {
             exp=1;
         }
         return exp*(new Random().nextInt(50)+1);
+    }
+    
+    public Data getData(){
+        return this.data;
+    }
+    
+    public String getFilepath(){
+        return this.file;
     }
 }

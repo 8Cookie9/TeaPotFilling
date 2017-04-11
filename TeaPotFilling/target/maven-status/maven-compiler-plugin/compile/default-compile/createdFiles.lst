@@ -1,7 +1,8 @@
+com\poro\Headgear.class
+com\poro\Misc.class
 com\poro\Equipment.class
 com\poro\User.class
 com\datahandling\SetData.class
-com\poro\EquipmentFactory.class
 com\poro\Level.class
 com\poro\Poro.class
 com\datahandling\Data.class

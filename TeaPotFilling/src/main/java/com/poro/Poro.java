@@ -23,4 +23,8 @@ public class Poro extends Level{
     public void addHeadgear(int def){
         super.addDef(def);
     }
+    
+    public void addEquipmentLevel(int atk){
+        super.addAtk(atk);
+    }
 }
