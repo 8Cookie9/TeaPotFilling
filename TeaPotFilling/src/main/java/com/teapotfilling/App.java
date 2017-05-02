@@ -17,7 +17,7 @@ public class App {
     public static void main( String[] args ) throws Exception {
         //C:/Users/Jaakko/AppData/Roaming/AnkhHeart/AnkhBotR2/Twitch/Files
         //C:/Users/Pumpkin/Documents/Streamstuff/Poro
-        Data data=new Data("C:/Users/Pumpkin/Documents/Streamstuff/Poro");
+        Data data=new Data("C:/Users/Jaakko/AppData/Roaming/AnkhHeart/AnkhBotR2/Twitch/Files");
         Command command=new Command(data);
         GUI gui=new GUI(command);
         SwingUtilities.invokeLater(gui);

@@ -1,6 +1,7 @@
 package com.poro;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class User {
@@ -111,5 +112,17 @@ public class User {
             this.storage.remove(slot);
             this.storage.add(p);
         }
+    }
+    
+    public void deletePoro(int id){
+        try{
+            this.storage.remove(id);
+        }catch(Exception e){}
+    }
+    
+    public void sortPoros(){
+        try{
+            Collections.sort(this.storage);
+        }catch(Exception e){}
     }
 }

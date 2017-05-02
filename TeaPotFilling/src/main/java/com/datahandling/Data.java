@@ -150,7 +150,7 @@ public class Data {
             int b=0;
             for(Poro p:user.getStorage()){
                 if((b+1)%5==1){
-                    s+="Page ["+(int) Math.ceil((b+5)/5)+"/"+(int) Math.ceil((user.getStorage().size()+4)/5)+"] ";
+                    s+="Room ["+(int) Math.ceil((b+5)/5)+"/"+(int) Math.ceil((user.getStorage().size()+4)/5)+"] ";
                 }
                 s+="["+b+"] "+p.getType()+" (Lv "+p.getLevel()+")";
                 if(b==user.getStorage().size()){

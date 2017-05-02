@@ -1,6 +1,6 @@
 package com.poro;
 
-public class Poro extends Level{
+public class Poro extends Level implements Comparable<Poro>{
     private final String type;
     
     public Poro(String type, int hp, int atk, int def, int hpmod, int atkmod, int defmod, int levelgain){
@@ -26,5 +26,10 @@ public class Poro extends Level{
     
     public void addEquipmentLevel(int atk){
         super.addAtk(atk);
+    }
+
+    @Override
+    public int compareTo(Poro o) {
+        return this.type.compareTo(o.type);
     }
 }

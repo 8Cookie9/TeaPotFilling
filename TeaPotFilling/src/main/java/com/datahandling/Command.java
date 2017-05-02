@@ -36,6 +36,7 @@ public class Command {
             runCommand(command);
         }
         this.commands=new ArrayList<>();
+        this.data.saveData();
     }
     
     public void runCommand(String command){
@@ -105,6 +106,10 @@ public class Command {
             userdata.swapPoros();
         }else if(userdata!=null&&commandName.equals("getporo")){
             userdata.getPoro(Integer.parseInt(args[0]));
+        }else if(userdata!=null&&commandName.equals("deleteporo")){
+            userdata.deletePoro(Integer.parseInt(args[0]));
+        }else if(userdata!=null&&commandName.equals("sortporos")){
+            userdata.sortPoros();
         }else if(userdata!=null&&commandName.equals("randomtea")){
             String tea="";
             for(int i=0;i<args.length;i++){
@@ -128,7 +133,7 @@ public class Command {
                 userdata.setEquipment(new Equipment(this.file+"/pillow.txt", 0));
             }else if(r<=14){
                 userdata.setEquipment(new Equipment(this.file+"/net.txt", 0));
-            }else if(r<=18){
+            }else{
                 userdata.setEquipment(new Equipment(this.file+"/fishingrod.txt", 0));
             }
         }else if(userdata!=null&&commandName.equals("headgear")){
@@ -149,6 +154,8 @@ public class Command {
                 }
             }
             userdata.addMisc(new Misc(name, Integer.parseInt(args[args.length-1])));
+        }else if(userdata!=null&&commandName.equals("addweaponexp")){
+            userdata.getEquipment().addExp(Integer.parseInt(args[0]));
         }else if(userdata!=null&&commandName.equals("battle")){
             User targetdata = getUserData(args[0]);
             if(args[1].equals("win")){
@@ -166,7 +173,6 @@ public class Command {
         }else if(userdata!=null&&commandName.equals("practice")){
             userdata.getEquipment().addExp(3);
         }
-        this.data.saveData();
     }
     
     public User getUserData(String username){

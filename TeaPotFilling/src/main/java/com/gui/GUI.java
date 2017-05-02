@@ -9,6 +9,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,35 +81,44 @@ public class GUI implements Runnable{
             this.command.runCommands();
             if(this.cycle%100==0){
                 this.toplist();
+                this.ping();
             }
             this.cycle++;
         }
         
-        public void toplist(){
+        private void ping(){
+            try{
+                HttpURLConnection conn=(HttpURLConnection) new URL("http://porostuff.herokuapp.com/").openConnection();
+                conn.setRequestMethod("HEAD");
+                conn.getResponseCode();
+            }catch(Exception e){}
+        }
+        
+        private void toplist(){
             Data data=this.command.getData();
             data.loadAll();
             List<User> userdata=data.getData();
-            List<Poro> poros=new ArrayList<>();
-            HashMap<User, List<Poro>> poromap=new HashMap<>();
+            HashMap<String, List<Poro>> poromap=new HashMap<>();
             for(User u:userdata){
                 List<Poro> poro=new ArrayList<>();
                 poro.add(u.getPoro());
-                poro.add(u.getSecondaryPoro());
-                poro.addAll(u.getStorage());
-                poromap.put(u, poro);
-                poros.add(u.getPoro());
-                poros.add(u.getSecondaryPoro());
-                poros.addAll(u.getStorage());
+                if(u.hasSecondary()){
+                    poro.add(u.getSecondaryPoro());
+                    poro.addAll(u.getStorage());
+                }
+                poromap.put(u.getUsername(), poro);
             }
             Poro bestHp=new Poro("none",0,0,0,0,0,0,1);
             Poro bestDef=new Poro("none",0,0,0,0,0,0,1);
             Poro bestAtk=new Poro("none",0,0,0,0,0,0,1);
             Poro sexy=new Poro("none",0,0,0,0,0,0,1);
-            User hp=new User("none");
-            User atk=new User("none");
-            User def=new User("none");
-            User sexyy=new User("none");
-            for(User u:poromap.keySet()){
+            Poro maxlevel=new Poro("none",0,0,0,0,0,0,1);
+            String hp="none";
+            String atk="none";
+            String def="none";
+            String lv="none";
+            String sexyy="none";
+            for(String u:poromap.keySet()){
                 for(Poro p:poromap.get(u)){
                     if(p.getHP()>=bestHp.getHP()){
                         bestHp=p;
@@ -121,6 +132,10 @@ public class GUI implements Runnable{
                         bestDef=p;
                         def=u;
                     }
+                    if(p.getTotalExp()>maxlevel.getTotalExp()){
+                        maxlevel=p;
+                        lv=u;
+                    }
                     if(p.getType().equals("Crocoro")){
                         sexy=p;
                         sexyy=u;
@@ -129,7 +144,7 @@ public class GUI implements Runnable{
             }
             SetData set=new SetData(this.command.getFilepath()+"/toplist.txt");
             List<String> list=new ArrayList<>();
-            list.add("#1 sexiest poro: "+sexy.getType()+" ("+sexyy.getUsername()+") | #1 strongest poro: "+bestAtk.getType()+" ("+atk.getUsername()+") | #1 fancy poro: "+bestDef.getType()+" ("+def.getUsername()+") | #1 gourmet poro: "+bestHp.getType()+" ("+hp.getUsername()+")");
+            list.add("#1 sexiest poro: "+sexy.getType()+" ("+sexyy+") | #1 strongest poro: "+bestAtk.getType()+" ("+atk+") | #1 fancy poro: "+bestDef.getType()+" ("+def+") | #1 gourmet poro: "+bestHp.getType()+" ("+hp+") | #1 friendly poro: "+maxlevel.getType()+" ("+lv+")");
             set.clean();
             set.write(list);
         }
